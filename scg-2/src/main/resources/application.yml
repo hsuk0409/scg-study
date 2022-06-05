@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+---
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: SCG GlobalFilter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: test-svc
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: TestFilter
+              args:
+                baseMessage: SCG TestFilter
+                preLogger: true
+                postLogger: true
